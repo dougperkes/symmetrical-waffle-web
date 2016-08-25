@@ -1,0 +1,25 @@
+{
+  "name": "symmetrical-waffle-web",
+  "version": "1.0.0",
+  "description": "MEAN stack summer camp scheduling system for Azure",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougperkes/symmetrical-waffle-web.git"
+  },
+  "author": "Doug Perkes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dougperkes/symmetrical-waffle-web/issues"
+  },
+  "homepage": "https://github.com/dougperkes/symmetrical-waffle-web#readme"
+}
