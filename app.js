@@ -4,6 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var DocumentDBClient = require('documentdb').DocumentClient;
+var config = require('./config');
+var TaskList = require('./routes/taskList');
+var TaskDao = require('./models/taskDao');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -22,8 +26,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+
+
+/*app.use('/', routes);
+app.use('/users', users);*/
+var docDbClient = new DocumentDBClient(config.host, {
+    masterKey: config.authKey
+});
+var taskDao = new TaskDao(docDbClient, config.databaseId, config.collectionId);
+var taskList = new TaskList(taskDao);
+taskDao.init();
+
+app.get('/', taskList.showTasks.bind(taskList));
+app.post('/addtask', taskList.addTask.bind(taskList));
+app.post('/completetask', taskList.completeTask.bind(taskList));
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
